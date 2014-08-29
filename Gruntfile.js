@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+  grunt.loadNpmTasks('grunt-es3-safe-recast');
   require('load-grunt-tasks')(grunt);
   var config = require('load-grunt-config')(grunt, {
     configPath: 'tasks/options',
@@ -53,7 +54,8 @@ module.exports = function(grunt) {
     'uglify:noVersion',
     'usebanner:addVersion',
     'copy:appAddOn',
-    'copy:vendorAddOn'
+    'copy:vendorAddOn',
+    'es3_safe_recast'
   ]);
 
   // Custom YUIDoc task
@@ -61,6 +63,18 @@ module.exports = function(grunt) {
 
   config.env = process.env;
   config.pkg = grunt.file.readJSON('package.json');
+
+  config.es3_safe_recast = { default_options: {
+    options: {},
+    files: [
+      {
+        src: [
+          'vendor-addon/torii/torii.amd.js'
+        ],
+        dest: 'vendor-addon/torii/torii.amd.js'
+      }
+    ]
+  }};
 
   // Load custom tasks from NPM
   grunt.loadNpmTasks('grunt-contrib-yuidoc');

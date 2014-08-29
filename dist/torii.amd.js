@@ -1,8 +1,8 @@
 /**
  * Torii version: 0.1.3
- * Built: Fri Jul 25 2014 11:23:42 GMT-0400 (EDT)
+ * Built: Thu Aug 28 2014 20:12:26 GMT-0400 (EDT)
  */
-define("torii/adapters/application", 
+define("torii/adapters/application",
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -33,7 +33,7 @@ define("torii/adapters/application",
 
     __exports__["default"] = ApplicationAdapter;
   });
-define("torii/bootstrap/session", 
+define("torii/bootstrap/session",
   ["torii/session","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -48,9 +48,9 @@ define("torii/bootstrap/session",
       return container;
     }
   });
-define("torii/bootstrap/torii", 
-  ["torii/torii","torii/providers/linked-in-oauth2","torii/providers/google-oauth2","torii/providers/facebook-connect","torii/providers/facebook-oauth2","torii/adapters/application","torii/providers/twitter-oauth1","torii/services/popup","exports"],
-  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __exports__) {
+define("torii/bootstrap/torii",
+  ["torii/torii","torii/providers/linked-in-oauth2","torii/providers/google-oauth2","torii/providers/facebook-connect","torii/providers/facebook-oauth2","torii/adapters/application","torii/providers/twitter-oauth1","torii/providers/github-oauth2","torii/services/popup","exports"],
+  function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __exports__) {
     "use strict";
     var Torii = __dependency1__["default"];
     var LinkedInOauth2Provider = __dependency2__["default"];
@@ -59,8 +59,9 @@ define("torii/bootstrap/torii",
     var FacebookOauth2Provider = __dependency5__["default"];
     var ApplicationAdapter = __dependency6__["default"];
     var TwitterProvider = __dependency7__["default"];
+    var GithubOauth2Provider = __dependency8__["default"];
 
-    var PopupService = __dependency8__["default"];
+    var PopupService = __dependency9__["default"];
 
     __exports__["default"] = function(container){
       container.register('torii:main', Torii);
@@ -69,6 +70,7 @@ define("torii/bootstrap/torii",
       container.register('torii-provider:facebook-connect', FacebookConnectProvider);
       container.register('torii-provider:facebook-oauth2', FacebookOauth2Provider);
       container.register('torii-provider:twitter', TwitterProvider);
+      container.register('torii-provider:github-oauth2', GithubOauth2Provider);
       container.register('torii-adapter:application', ApplicationAdapter);
 
       container.register('torii-service:popup', PopupService);
@@ -83,7 +85,7 @@ define("torii/bootstrap/torii",
       return container;
     }
   });
-define("torii/configuration", 
+define("torii/configuration",
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -116,7 +118,7 @@ define("torii/configuration",
 
     __exports__["default"] = configuration;
   });
-define("torii/initializers/initialize-torii-callback", 
+define("torii/initializers/initialize-torii-callback",
   ["torii/redirect-handler","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -133,7 +135,7 @@ define("torii/initializers/initialize-torii-callback",
       }
     };
   });
-define("torii/initializers/initialize-torii-session", 
+define("torii/initializers/initialize-torii-session",
   ["torii/configuration","torii/bootstrap/session","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -152,7 +154,7 @@ define("torii/initializers/initialize-torii-session",
       }
     };
   });
-define("torii/initializers/initialize-torii", 
+define("torii/initializers/initialize-torii",
   ["torii/bootstrap/torii","torii/configuration","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -183,7 +185,7 @@ define("torii/initializers/initialize-torii",
 
     __exports__["default"] = initializer;
   });
-define("torii/lib/load-initializer", 
+define("torii/lib/load-initializer",
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -194,7 +196,7 @@ define("torii/lib/load-initializer",
       });
     }
   });
-define("torii/lib/parse-query-string", 
+define("torii/lib/parse-query-string",
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -221,7 +223,7 @@ define("torii/lib/parse-query-string",
       }
     });
   });
-define("torii/lib/query-string", 
+define("torii/lib/query-string",
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -292,7 +294,7 @@ define("torii/lib/query-string",
       }
     });
   });
-define("torii/lib/required-property", 
+define("torii/lib/required-property",
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -304,7 +306,7 @@ define("torii/lib/required-property",
 
     __exports__["default"] = requiredProperty;
   });
-define("torii/lib/state-machine", 
+define("torii/lib/state-machine",
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -585,7 +587,7 @@ define("torii/lib/state-machine",
 
     __exports__["default"] = StateMachine;
   });
-define("torii/load-initializers", 
+define("torii/load-initializers",
   ["torii/lib/load-initializer","torii/initializers/initialize-torii","torii/initializers/initialize-torii-callback","torii/initializers/initialize-torii-session","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
@@ -600,7 +602,7 @@ define("torii/load-initializers",
       loadInitializer(initializeToriiSession);
     }
   });
-define("torii/providers/base", 
+define("torii/providers/base",
   ["torii/lib/required-property","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -621,7 +623,7 @@ define("torii/providers/base",
 
     __exports__["default"] = Base;
   });
-define("torii/providers/facebook-connect", 
+define("torii/providers/facebook-connect",
   ["torii/providers/base","torii/configuration","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -708,7 +710,7 @@ define("torii/providers/facebook-connect",
 
     __exports__["default"] = Facebook;
   });
-define("torii/providers/facebook-oauth2", 
+define("torii/providers/facebook-oauth2",
   ["torii/configuration","torii/providers/oauth2-code","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -732,7 +734,37 @@ define("torii/providers/facebook-oauth2",
       })
     });
   });
-define("torii/providers/google-oauth2", 
+define("torii/providers/github-oauth2",
+  ["torii/providers/oauth2-code","torii/configuration","exports"],
+  function(__dependency1__, __dependency2__, __exports__) {
+    "use strict";
+    /**
+     * This class implements authentication against Github
+     * using the OAuth2 authorization flow in a popup window.
+     */
+
+    var Oauth2 = __dependency1__["default"];
+    var configurable = __dependency2__.configurable;
+
+    var GithubOauth2 = Oauth2.extend({
+      name:       'github-oauth2',
+      baseUrl:    'https://github.com/login/oauth/authorize',
+
+      // additional url params that this provider requires
+      requiredUrlParams: ['state'],
+
+      state: 'STATE',
+
+      redirectUri: configurable('redirectUri', function(){
+        // A hack that allows redirectUri to be configurable
+        // but default to the superclass
+        return this._super();
+      })
+    });
+
+    __exports__["default"] = GithubOauth2;
+  });
+define("torii/providers/google-oauth2",
   ["torii/providers/oauth2-code","torii/configuration","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -746,15 +778,18 @@ define("torii/providers/google-oauth2",
 
     var GoogleOauth2 = Oauth2.extend({
 
-      name:       'google-oauth2',
-      baseUrl:    'https://accounts.google.com/o/oauth2/auth',
+      name:    'google-oauth2',
+      baseUrl: 'https://accounts.google.com/o/oauth2/auth',
 
       // additional params that this provider requires
-      requiredUrlParams:   ['state'],
+      requiredUrlParams: ['state'],
+      optionalUrlParams: ['scope', 'request_visible_actions'],
 
-      scope:        configurable('scope', 'email'),
+      request_visible_actions: configurable('requestVisibleActions', ''),
 
-      state: 'STATE',
+      scope: configurable('scope', 'email'),
+
+      state: configurable('state', 'STATE'),
 
       redirectUri: configurable('redirectUri',
                                 'http://localhost:8000/oauth2callback')
@@ -762,7 +797,7 @@ define("torii/providers/google-oauth2",
 
     __exports__["default"] = GoogleOauth2;
   });
-define("torii/providers/linked-in-oauth2", 
+define("torii/providers/linked-in-oauth2",
   ["torii/providers/oauth2-code","torii/configuration","exports"],
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
@@ -793,7 +828,7 @@ define("torii/providers/linked-in-oauth2",
 
     __exports__["default"] = LinkedInOauth2;
   });
-define("torii/providers/oauth1", 
+define("torii/providers/oauth1",
   ["torii/providers/base","torii/configuration","torii/lib/query-string","torii/lib/required-property","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
@@ -837,7 +872,7 @@ define("torii/providers/oauth1",
 
     __exports__["default"] = Oauth1;
   });
-define("torii/providers/oauth2-code", 
+define("torii/providers/oauth2-code",
   ["torii/providers/base","torii/configuration","torii/lib/query-string","torii/lib/required-property","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
@@ -916,7 +951,7 @@ define("torii/providers/oauth2-code",
 
     __exports__["default"] = Oauth2;
   });
-define("torii/providers/twitter-oauth1", 
+define("torii/providers/twitter-oauth1",
   ["torii/providers/oauth1","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -926,7 +961,7 @@ define("torii/providers/twitter-oauth1",
       name: 'twitter'
     });
   });
-define("torii/redirect-handler", 
+define("torii/redirect-handler",
   ["exports"],
   function(__exports__) {
     "use strict";
@@ -971,7 +1006,7 @@ define("torii/redirect-handler",
 
     __exports__["default"] = RedirectHandler;
   });
-define("torii/services/popup", 
+define("torii/services/popup",
   ["torii/lib/parse-query-string","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -1003,7 +1038,7 @@ define("torii/services/popup",
     function prepareOptions(options){
       var width = options.width || 500,
           height = options.height || 500;
-      return Ember.$.merge({
+      return Ember.$.extend({
         left: ((screen.width / 2) - (width / 2)),
         top: ((screen.height / 2) - (height / 2)),
         width: width,
@@ -1110,7 +1145,7 @@ define("torii/services/popup",
 
     __exports__["default"] = Popup;
   });
-define("torii/session", 
+define("torii/session",
   ["torii/session/state-machine","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -1212,7 +1247,7 @@ define("torii/session",
 
     __exports__["default"] = Session;
   });
-define("torii/session/state-machine", 
+define("torii/session/state-machine",
   ["torii/lib/state-machine","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -1300,7 +1335,7 @@ define("torii/session/state-machine",
       return sm;
     }
   });
-define("torii/torii", 
+define("torii/torii",
   ["exports"],
   function(__exports__) {
     "use strict";
